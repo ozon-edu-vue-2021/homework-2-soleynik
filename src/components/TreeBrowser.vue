@@ -4,6 +4,7 @@
     <div
       v-if="isDirectory"
       @click="toggle"
+      :node="node"
       :style="{'margin-left': `${depth * 20}px`}"
     >
       <span v-if="isToggled">
@@ -15,11 +16,15 @@
       {{ this.node.name }}
     </div>
     <File v-else-if="isFile"
-          :node="node"
-          :style="{'margin-left': `${depth * 20}px`}">
+          :type="node.type"
+          :name="node.name"
+          :style="{'margin-left': `${depth * 20}px`}"
+    >
     </File>
     <Link v-else-if="isLink"
-          :node="node"
+          :type="node.type"
+          :name="node.name"
+          :target="node.target"
           :style="{'margin-left': `${depth * 20}px`}"
     >
     </Link>

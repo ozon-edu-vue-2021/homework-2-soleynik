@@ -1,6 +1,6 @@
 <template>
   <div class="link">
-    <LinkIcon/>{{ this.node.name }}
+    <LinkIcon/>{{ this.name }}
   </div>
 </template>
 
@@ -10,8 +10,14 @@ export default {
   name: "Link",
   components:{ LinkIcon },
   props: {
-    node:{
-      type: Object
+    type:{
+      type: String
+    },
+    name: {
+      type: String
+    },
+    target: {
+      type: String
     }
   }
 }

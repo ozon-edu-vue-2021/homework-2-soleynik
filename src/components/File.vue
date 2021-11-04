@@ -1,6 +1,6 @@
 <template>
   <div class="file">
-    <FileIcon/>{{ this.node.name }}
+    <FileIcon/>{{ this.name }}
   </div>
 </template>
 
@@ -10,8 +10,11 @@ export default {
   name: "File",
   components:{ FileIcon },
   props: {
-    node: {
-      type: Object
+    type: {
+      type: String
+    },
+    name: {
+      type: String
     }
   }
 }

@@ -1,16 +1,23 @@
 <template>
   <div class="directory">
-    {{ this.node.name }}
+    <DirectoryClosedIcon/>{{ this.name }}
   </div>
 </template>
 
 <script>
+import DirectoryClosedIcon from "@/components/Icons/DirectoryClosedIcon";
 export default {
   name: "Directory",
-  components:{},
+  components:{DirectoryClosedIcon},
   props: {
-    node:{
-      type: Object
+    type:{
+      type: String
+    },
+    name:{
+      type: String
+    },
+    contents:{
+      type: Array
     }
   }
 }
