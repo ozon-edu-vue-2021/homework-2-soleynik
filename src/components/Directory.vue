@@ -1,20 +1,25 @@
 <template>
   <div class="directory">
-    <b>{{ this.name }}</b>
+    {{ this.node.name }}
   </div>
 </template>
 
 <script>
 export default {
   name: "Directory",
+  components:{},
   props: {
-    type: String,
-    name: String,
-    contents: Array
+    node:{
+      type: Object
+    }
   }
 }
 </script>
 
 <style scoped>
-
+.directory{
+  text-align: left;
+  font-size: 20px;
+  display: inline-flex;
+}
 </style>

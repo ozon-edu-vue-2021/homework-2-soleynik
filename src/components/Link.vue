@@ -1,20 +1,28 @@
 <template>
-  <div>
-    <i>{{ this.name }}</i>
+  <div class="link">
+    <LinkIcon/>{{ this.node.name }}
   </div>
 </template>
 
 <script>
+import LinkIcon from "@/components/Icons/LinkIcon";
 export default {
   name: "Link",
+  components:{ LinkIcon },
   props: {
-    type: String,
-    name: String,
-    target: String
+    node:{
+      type: Object
+    }
   }
 }
 </script>
 
 <style scoped>
+.link{
+  text-align: left;
+  font-size: 18px;
+  font-style: italic;
+  display: inline-flex;
+}
 
 </style>

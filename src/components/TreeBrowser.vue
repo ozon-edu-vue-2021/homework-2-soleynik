@@ -1,51 +1,54 @@
 <template>
   <div class="view">
-    <div
-      @click="isToggled = !isToggled"
-      :style="{'margin-left': `${depth * 20}px`}"
-      class="node"
-    >
-      <span
-          class="type">
-        {{ isToggled ? "-" : "+"}}
-      </span>
-      {{ node.name }}
-    </div>
 
+    <div
+      v-if="isDirectory"
+      @click="toggle"
+      :style="{'margin-left': `${depth * 20}px`}"
+    >
+      <span v-if="isToggled">
+        <DirectoryOpenedIcon/>
+      </span>
+      <span v-else>
+        <DirectoryClosedIcon/>
+      </span>
+      {{ this.node.name }}
+    </div>
+    <File v-else-if="isFile"
+          :node="node"
+          :style="{'margin-left': `${depth * 20}px`}">
+    </File>
+    <Link v-else-if="isLink"
+          :node="node"
+          :style="{'margin-left': `${depth * 20}px`}"
+    >
+    </Link>
+  <div v-if="isToggled" class="tree_browser_wrapper">
     <TreeBrowser
-        v-for="content in node.contents"
-        :key="content.name"
+        v-for="(content,index) in node.contents"
+        :key="index"
         :node="content"
         :depth="depth + 1"
     />
   </div>
-
-
-
-<!--    <Directory-->
-<!--      v-if="isDirectory"-->
-<!--    >-->
-<!--    </Directory>-->
-<!--    <File-->
-<!--      v-else-if="isFile"-->
-<!--    >-->
-<!--      </File>-->
-<!--    <Link-->
-<!--      v-else-if="isLink"-->
-<!--    >-->
-<!--    </Link>-->
+  </div>
 
 
 </template>
 <script>
-
-// import File from "@/components/File";
-// import Directory from "@/components/Directory";
-// import Link from "@/components/Link";
+import File from "@/components/File.vue";
+import Link from "@/components/Link.vue";
+import DirectoryClosedIcon from "@/components/Icons/DirectoryClosedIcon";
+import DirectoryOpenedIcon from "@/components/Icons/DirectoryOpenedIcon";
 
 export default {
   name: "TreeBrowser",
-  // components: {Link, Directory, File},
+  components: {
+    File,
+    Link,
+    DirectoryClosedIcon,
+    DirectoryOpenedIcon
+  },
   props: {
     node: Object,
     depth: {
@@ -55,23 +58,19 @@ export default {
   },
   data(){
     return{
-      isToggled: false
+      isToggled: false,
     }
   },
-  methods:{
-    nodeType(node){
-      if(node.contents){
-        return "directory"
-      }else if(node.type === 'file'){
-        return "file"
-      }else if(node.type === 'link'){
-        return "link"
+  methods: {
+    toggle: function(){
+      if(this.isDirectory){
+        this.isToggled = !this.isToggled
       }
     }
   },
   computed:{
     isDirectory: function (){
-      return this.node.contents;
+      return this.node.contents && this.node.contents.length;
     },
     isFile: function (){
       return this.node.type === 'file';
@@ -85,8 +84,5 @@ export default {
 </script>
 
 <style scoped>
-.node{
-  text-align: left;
-  font-size: 18px;
-}
+
 </style>
